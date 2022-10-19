@@ -3,13 +3,15 @@ import SaveIcon from '@mui/icons-material/Save';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import { ChangeEvent, useState, useContext } from 'react';
 import { EntriesContext } from '../../context/entries';
+import { UIContext } from '../../context/ui';
 
 export const NewEntry = () => {
-  const [isAdding, setIsAdding] = useState(false);
+  // const [isAddingEntry, setIsAddingEntry] = useState(false);
   const [inputValue, setinputValue] = useState(' ');
   const [isTouched, setisTouched] = useState(false);
 
   const { addNewEntry } = useContext(EntriesContext);
+  const { setIsAddingEntry, isAddingEntry } = useContext(UIContext);
 
   const onChangeInputValue = (event: ChangeEvent<HTMLInputElement>) => {
     setinputValue(event.target.value);
@@ -20,14 +22,14 @@ export const NewEntry = () => {
 
     addNewEntry(inputValue);
 
-    setIsAdding(false);
+    setIsAddingEntry(false);
     setisTouched(false);
     setinputValue('');
   };
 
   return (
     <Box sx={{ marginBottom: 2, paddingX: 2 }}>
-      {isAdding ? (
+      {isAddingEntry ? (
         <>
           <TextField
             fullWidth
@@ -52,7 +54,7 @@ export const NewEntry = () => {
             >
               Guardar
             </Button>
-            <Button variant="text" onClick={() => setIsAdding(false)}>
+            <Button variant="text" onClick={() => setIsAddingEntry(false)}>
               Cancelar
             </Button>
           </Box>
@@ -63,7 +65,7 @@ export const NewEntry = () => {
           color="primary"
           fullWidth
           startIcon={<AddCircleIcon />}
-          onClick={() => setIsAdding(true)}
+          onClick={() => setIsAddingEntry(true)}
         >
           Agregar
         </Button>
