@@ -34,12 +34,17 @@ export const EntriesProvider: FC<ch> = ({ children }) => {
     });
   };
 
+  const dropEntry = (entry: Entry) => {
+    dispatch({ type: 'Entry - drop', payload: entry });
+  };
+
   return (
     <EntriesContext.Provider
       value={{
         ...state,
         //METHODS
         addNewEntry,
+        dropEntry,
       }}
     >
       {children}

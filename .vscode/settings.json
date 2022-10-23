@@ -1,5 +1,5 @@
 {
-  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.defaultFormatter": "vscode.typescript-language-features",
   "javascript.preferences.quoteStyle": "single",
   "prettier.singleQuote": true,
   "editor.formatOnSave": true,
