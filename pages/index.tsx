@@ -9,7 +9,7 @@ const HomePage: NextPage = () => {
       <Grid container spacing={2}>
         <Grid item xs={12} sm={4}>
           <Card sx={{ height: 'calc(100vh - 100px)' }}>
-            <CardHeader title="Pendientes" />
+            <CardHeader title="Pennding" />
             <CardContent>
               <NewEntry />
               <EntryList status="pennding" />
@@ -19,7 +19,7 @@ const HomePage: NextPage = () => {
 
         <Grid item xs={12} sm={4}>
           <Card sx={{ height: 'calc(100vh - 100px)' }}>
-            <CardHeader title="Pendientes" />
+            <CardHeader title="In progress" />
             <CardContent>
               <EntryList status="in-progress" />
             </CardContent>
@@ -28,7 +28,7 @@ const HomePage: NextPage = () => {
 
         <Grid item xs={12} sm={4}>
           <Card sx={{ height: 'calc(100vh - 100px)' }}>
-            <CardHeader title="Pendientes" />
+            <CardHeader title="Done" />
             <CardContent>
               <EntryList status="finished" />
             </CardContent>
