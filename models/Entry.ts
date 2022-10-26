@@ -12,7 +12,8 @@ const entrySchema = new Schema({
         enum: {
             values: ['pennding', 'in-progress', 'finished'],
             message: '{VALUE} no allowed!'
-        }
+        },
+        default: "pennding"
     }
 })
 

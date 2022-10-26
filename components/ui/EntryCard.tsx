@@ -34,7 +34,7 @@ export const EntryCard: FC<Props> = ({ entry }) => {
     >
       <CardActionArea>
         <CardContent>
-          <pre>{isDragging ? 'yep' : 'nop'}</pre>
+          {/* <pre>{isDragging ? 'yep' : 'nop'}</pre> */}
           <Typography sx={{ whiteSpace: 'pre-line' }}>
             {entry.description}
           </Typography>
