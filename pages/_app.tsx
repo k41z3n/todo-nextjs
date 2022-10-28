@@ -6,10 +6,13 @@ import { CssBaseline, ThemeProvider } from '@mui/material';
 import { UIProvider } from '../context/ui';
 import { EntriesProvider } from '../context/entries';
 
+// import { SnackbarProvider } from 'notistack';
+
 import { darkTheme } from '../themes';
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
+
     <EntriesProvider>
       <UIProvider>
         <ThemeProvider theme={darkTheme}>
@@ -18,6 +21,7 @@ function MyApp({ Component, pageProps }: AppProps) {
         </ThemeProvider>
       </UIProvider>
     </EntriesProvider>
+
   );
 }
 

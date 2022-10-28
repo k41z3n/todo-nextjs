@@ -8,6 +8,7 @@ import {
 } from '@mui/material';
 import { Entry } from '../../interfaces';
 import { UIContext } from '../../context/ui';
+import { useRouter } from 'next/router';
 
 interface Props {
   entry: Entry;
@@ -15,6 +16,8 @@ interface Props {
 
 export const EntryCard: FC<Props> = ({ entry }) => {
   const { setIsDragging, isDragging } = useContext(UIContext);
+
+  const router = useRouter()
 
   const onDragStart = (event: DragEvent) => {
     event.dataTransfer.setData('entryId', entry._id);
@@ -25,8 +28,13 @@ export const EntryCard: FC<Props> = ({ entry }) => {
     setIsDragging(false);
   };
 
+  const onClick = () => {
+    router.push(`/entries/${entry._id}`)
+  }
+
   return (
     <Card
+      onClick={onClick}
       sx={{ marginBottom: 1 }}
       draggable
       onDragStart={onDragStart}
