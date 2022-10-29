@@ -37,7 +37,7 @@ interface Props {
   entry: Entry;
 }
 
-export const entryPage: FC<Props> = ({ entry }) => {
+export const EntryPage: FC<Props> = ({ entry }) => {
   const { dropEntry, deleteEntry } = useContext(EntriesContext);
 
   const [inputValue, setInputValue] = useState(entry.description);
@@ -171,4 +171,4 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
   };
 };
 
-export default entryPage;
+export default EntryPage;

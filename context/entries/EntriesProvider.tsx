@@ -48,7 +48,7 @@ export const EntriesProvider: FC<ch> = ({ children }) => {
 
   const dropEntry = async (
     { _id, description, status }: Entry,
-    showSnackbar: boolean
+    showSnackbar: boolean | undefined
   ) => {
     try {
       const { data } = await entriesApi.put<Entry>(`/entries/${_id}`, {

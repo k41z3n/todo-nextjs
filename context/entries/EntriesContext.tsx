@@ -5,7 +5,7 @@ interface contextProps {
   entries: Entry[];
   //MEHODS
   addNewEntry: (description: string) => void;
-  dropEntry: (enrty: Entry, showSnackBar: boolean) => void;
+  dropEntry: (enrty: Entry, showSnackBar?: boolean) => void;
   deleteEntry: (enrtyId: string) => void;
 }
 
