@@ -2,8 +2,7 @@ import type { NextApiRequest, NextApiResponse } from 'next'
 import mongoose from 'mongoose';
 import { db } from '../../../database';
 import { Entry } from '../../../models';
-import { IEntry } from '../../../models/Entry';
-import { validateConfig } from 'next/dist/server/config-shared';
+import EntryModel, { IEntry } from '../../../models/Entry';
 
 type Data =
     | { message: string }
@@ -23,6 +22,9 @@ export default function handler(req: NextApiRequest, res: NextApiResponse<Data>)
 
         case 'PUT':
             return updateEntry(req, res)
+
+        case 'DELETE':
+            return deleteEntry(req, res)
 
         default:
             return res.status(400).json({ message: 'method not fount' })
@@ -79,5 +81,28 @@ const updateEntry = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
         await db.disconnect()
         console.log(error);
         return res.status(400).json({ message: error.errors.status.message })
+    }
+}
+
+
+const deleteEntry = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
+
+    await db.connect
+
+    const { id } = req.query
+
+    try {
+
+        const deletedEntry = await EntryModel.findByIdAndRemove(id)
+
+        await db.disconnect()
+
+        return res.status(200).json(deletedEntry!)
+
+
+    } catch (error) {
+        await db.disconnect()
+        console.log(error);
+        return res.status(400).json({ message: 'Error deleting' })
     }
 }

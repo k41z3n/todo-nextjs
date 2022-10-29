@@ -46,25 +46,53 @@ export const EntriesProvider: FC<ch> = ({ children }) => {
     dispatch({ type: 'Entry - add', payload: data });
   };
 
-  const dropEntry = async ({ _id, description, status }: Entry) => {
+  const dropEntry = async (
+    { _id, description, status }: Entry,
+    showSnackbar: boolean
+  ) => {
     try {
       const { data } = await entriesApi.put<Entry>(`/entries/${_id}`, {
         description,
         status,
       });
 
-      enqueueSnackbar('Entry updated', {
-        variant: 'success',
-        anchorOrigin: {
-          horizontal: 'right',
-          vertical: 'top',
-        },
-      });
+      if (showSnackbar) {
+        enqueueSnackbar('Entry updated', {
+          variant: 'success',
+          anchorOrigin: {
+            horizontal: 'right',
+            vertical: 'top',
+          },
+        });
+      }
 
       dispatch({ type: 'Entry - drop', payload: data });
     } catch (error) {
-      console.log(error);
+      console.log('Error@dropEntry', error);
     }
+  };
+
+  const deleteEntry = async (EntryId: string) => {
+    return new Promise(async (resolve, reject) => {
+      try {
+        const res = await entriesApi.delete(`/entries/${EntryId}`);
+        console.log(res);
+        enqueueSnackbar('Entry deleted', {
+          variant: 'error',
+          anchorOrigin: {
+            horizontal: 'right',
+            vertical: 'top',
+          },
+        });
+
+        await getEntriesData();
+
+        resolve(true);
+      } catch (error) {
+        console.log('Error@deleteEntry', error);
+        reject(false);
+      }
+    });
   };
 
   const getEntriesData = async () => {
@@ -83,6 +111,7 @@ export const EntriesProvider: FC<ch> = ({ children }) => {
         //METHODS
         addNewEntry,
         dropEntry,
+        deleteEntry,
       }}
     >
       {children}

@@ -6,6 +6,9 @@ import {
   Typography,
   CardContent,
 } from '@mui/material';
+
+import { timeFromToNow } from '../../utils/dateFunctions';
+
 import { Entry } from '../../interfaces';
 import { UIContext } from '../../context/ui';
 import { useRouter } from 'next/router';
@@ -17,7 +20,7 @@ interface Props {
 export const EntryCard: FC<Props> = ({ entry }) => {
   const { setIsDragging, isDragging } = useContext(UIContext);
 
-  const router = useRouter()
+  const router = useRouter();
 
   const onDragStart = (event: DragEvent) => {
     event.dataTransfer.setData('entryId', entry._id);
@@ -29,8 +32,8 @@ export const EntryCard: FC<Props> = ({ entry }) => {
   };
 
   const onClick = () => {
-    router.push(`/entries/${entry._id}`)
-  }
+    router.push(`/entries/${entry._id}`);
+  };
 
   return (
     <Card
@@ -50,7 +53,9 @@ export const EntryCard: FC<Props> = ({ entry }) => {
         <CardActions
           sx={{ display: 'flex', justifyContent: 'flex-end', paddingRight: 2 }}
         >
-          <Typography variant="body2">{entry.createAt}</Typography>
+          <Typography variant="body2">
+            {timeFromToNow(entry.createAt)}
+          </Typography>
         </CardActions>
       </CardActionArea>
     </Card>
