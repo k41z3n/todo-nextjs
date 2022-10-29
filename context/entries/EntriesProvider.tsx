@@ -1,7 +1,7 @@
 import { FC, useEffect, useReducer } from 'react';
 
 // import { v4 as uuidv4 } from 'uuid';
-
+import { useSnackbar } from 'notistack';
 
 import { Entry } from '../../interfaces';
 
@@ -23,8 +23,9 @@ const ENTRIES_INITIAL_STATE: EntriesState = {
 export const EntriesProvider: FC<ch> = ({ children }) => {
   const [state, dispatch] = useReducer(entriesReducer, ENTRIES_INITIAL_STATE);
 
-  const addNewEntry = async (description: string) => {
+  const { enqueueSnackbar, closeSnackbar } = useSnackbar();
 
+  const addNewEntry = async (description: string) => {
     // const newEntry: Entry = {
     //   _id: uuidv4(),
     //   description,
@@ -32,34 +33,48 @@ export const EntriesProvider: FC<ch> = ({ children }) => {
     //   status: 'pennding',
     // };
 
-    const { data } = await entriesApi.post<Entry>('/entries', { description })
+    const { data } = await entriesApi.post<Entry>('/entries', { description });
 
-    dispatch({ type: 'Entry - add', payload: data, });
+    enqueueSnackbar('new Entry created', {
+      variant: 'info',
+      anchorOrigin: {
+        horizontal: 'right',
+        vertical: 'top',
+      },
+    });
+
+    dispatch({ type: 'Entry - add', payload: data });
   };
 
   const dropEntry = async ({ _id, description, status }: Entry) => {
-
     try {
+      const { data } = await entriesApi.put<Entry>(`/entries/${_id}`, {
+        description,
+        status,
+      });
 
-      const { data } = await entriesApi.put<Entry>(`/entries/${_id}`, { description, status })
+      enqueueSnackbar('Entry updated', {
+        variant: 'success',
+        anchorOrigin: {
+          horizontal: 'right',
+          vertical: 'top',
+        },
+      });
 
       dispatch({ type: 'Entry - drop', payload: data });
-
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
   };
 
-
   const getEntriesData = async () => {
-    const { data } = await entriesApi.get('/entries')
-    dispatch({ type: 'Entry - get-data', payload: data })
-  }
+    const { data } = await entriesApi.get('/entries');
+    dispatch({ type: 'Entry - get-data', payload: data });
+  };
 
   useEffect(() => {
-    getEntriesData()
-  }, [])
-
+    getEntriesData();
+  }, []);
 
   return (
     <EntriesContext.Provider
